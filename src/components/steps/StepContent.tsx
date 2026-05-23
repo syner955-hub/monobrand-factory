@@ -11,16 +11,9 @@ interface Props {
 }
 
 const pageLabels: Record<string, string> = {
-  home: "Главная",
-  bonus: "Бонусы и промо",
-  games: "Игры / Слоты",
-  legit: "Легитимность",
-  login: "Вход / Регистрация",
-  geo: "Гео-страница",
-  payments: "Платежи",
-  mobile: "Мобильная версия",
-  vip: "VIP / Лояльность",
-  faq: "FAQ",
+  home: "Главная", bonus: "Бонусы и промо", games: "Игры / Слоты",
+  legit: "Легитимность", login: "Вход / Регистрация", geo: "Гео-страница",
+  payments: "Платежи", mobile: "Мобильная версия", vip: "VIP / Лояльность", faq: "FAQ",
 };
 
 export default function StepContent({ config, setConfig, onNext, onBack }: Props) {
@@ -30,15 +23,12 @@ export default function StepContent({ config, setConfig, onNext, onBack }: Props
 
   const handleGenerate = async () => {
     setGenerating(true);
-    // TODO: вызов AI-агентов (Агент 1 → Агент 2)
     await new Promise((r) => setTimeout(r, 2000));
     setAnalysisDone(true);
     setGenerating(false);
-    
-    // Placeholder content
     const newContent: Record<string, string> = {};
     config.pages.forEach((p) => {
-      newContent[p] = `<h2>${config.brand} — ${pageLabels[p]}</h2>\n<p>Контент будет сгенерирован AI-агентом на основе анализа конкурентов...</p>`;
+      newContent[p] = `<h2>${config.brand} — ${pageLabels[p]}</h2>\n<p>Контент будет сгенерирован AI-агентом на основе анализа топ-3 монобрендов в выдаче...</p>`;
     });
     setConfig({ ...config, content: newContent });
   };
@@ -50,18 +40,18 @@ export default function StepContent({ config, setConfig, onNext, onBack }: Props
   return (
     <div className="space-y-6">
       {/* Analysis & Generate */}
-      <section className="glass-card p-6">
-        <div className="flex items-center justify-between mb-4">
+      <section className="bg-bg-card border border-border-primary rounded-2xl p-6 shadow-sm">
+        <div className="flex items-center justify-between">
           <div>
             <h3 className="text-text-primary font-semibold">AI-генерация контента</h3>
             <p className="text-text-muted text-sm mt-1">
-              Агент проанализирует топ-3 монобренда в выдаче и сгенерирует уникальный контент
+              Анализ топ-3 монобрендов → генерация уникального контента по GIST
             </p>
           </div>
           <button
             onClick={handleGenerate}
             disabled={generating}
-            className={`btn-primary flex items-center gap-2 ${generating ? "opacity-60" : ""}`}
+            className={`px-5 py-2.5 bg-accent-primary text-white font-medium rounded-xl transition-all duration-200 hover:bg-accent-primary/90 hover:shadow-glow active:scale-[0.98] flex items-center gap-2 ${generating ? "opacity-60 cursor-wait" : ""}`}
           >
             {generating ? (
               <>
@@ -82,40 +72,38 @@ export default function StepContent({ config, setConfig, onNext, onBack }: Props
           </button>
         </div>
 
-        {/* Analysis status */}
         {analysisDone && (
-          <div className="grid grid-cols-3 gap-3 mt-4">
-            <div className="bg-bg-tertiary rounded-xl p-3 border border-border-primary">
-              <p className="text-accent-success text-xs font-medium">Конкуренты</p>
-              <p className="text-text-primary font-bold text-lg">3</p>
-              <p className="text-text-muted text-xs">монобренда найдено</p>
+          <div className="grid grid-cols-3 gap-3 mt-5">
+            <div className="bg-bg-secondary rounded-xl p-4 border border-border-primary">
+              <p className="text-accent-success text-xs font-semibold">Конкуренты</p>
+              <p className="text-text-primary font-bold text-2xl mt-1">3</p>
+              <p className="text-text-muted text-xs mt-0.5">монобренда в топе</p>
             </div>
-            <div className="bg-bg-tertiary rounded-xl p-3 border border-border-primary">
-              <p className="text-accent-warning text-xs font-medium">Гэпы</p>
-              <p className="text-text-primary font-bold text-lg">5</p>
-              <p className="text-text-muted text-xs">непокрытых интентов</p>
+            <div className="bg-bg-secondary rounded-xl p-4 border border-border-primary">
+              <p className="text-accent-warning text-xs font-semibold">Гэпы</p>
+              <p className="text-text-primary font-bold text-2xl mt-1">5</p>
+              <p className="text-text-muted text-xs mt-0.5">непокрытых интентов</p>
             </div>
-            <div className="bg-bg-tertiary rounded-xl p-3 border border-border-primary">
-              <p className="text-accent-info text-xs font-medium">Контент</p>
-              <p className="text-text-primary font-bold text-lg">{config.pages.length}</p>
-              <p className="text-text-muted text-xs">страниц готово</p>
+            <div className="bg-bg-secondary rounded-xl p-4 border border-border-primary">
+              <p className="text-accent-info text-xs font-semibold">Контент</p>
+              <p className="text-text-primary font-bold text-2xl mt-1">{config.pages.length}</p>
+              <p className="text-text-muted text-xs mt-0.5">страниц готово</p>
             </div>
           </div>
         )}
       </section>
 
-      {/* Page tabs + Editor */}
-      <section className="glass-card overflow-hidden">
-        {/* Tabs */}
-        <div className="flex border-b border-border-primary overflow-x-auto">
+      {/* Tabs + Editor */}
+      <section className="bg-bg-card border border-border-primary rounded-2xl overflow-hidden shadow-sm">
+        <div className="flex border-b border-border-primary overflow-x-auto bg-bg-secondary">
           {config.pages.map((page) => (
             <button
               key={page}
               onClick={() => setActivePage(page)}
-              className={`px-5 py-3 text-sm font-medium whitespace-nowrap transition-all border-b-2 ${
+              className={`px-5 py-3.5 text-sm font-medium whitespace-nowrap transition-all border-b-2 ${
                 activePage === page
-                  ? "text-accent-primary border-accent-primary bg-accent-primary/5"
-                  : "text-text-muted border-transparent hover:text-text-secondary hover:bg-bg-hover"
+                  ? "text-accent-primary border-accent-primary bg-bg-card"
+                  : "text-text-muted border-transparent hover:text-text-secondary"
               }`}
             >
               {pageLabels[page] || page}
@@ -123,37 +111,33 @@ export default function StepContent({ config, setConfig, onNext, onBack }: Props
           ))}
         </div>
 
-        {/* Editor */}
         <div className="p-6">
           <div className="flex items-center justify-between mb-3">
             <label className="text-text-secondary text-sm font-medium">
               Контент: {pageLabels[activePage]}
             </label>
-            <span className="text-text-muted text-xs">
+            <span className="text-text-muted text-xs bg-bg-tertiary px-2 py-1 rounded-md">
               {(config.content[activePage] || "").length} символов
             </span>
           </div>
           <textarea
-            className="input-field font-mono text-sm min-h-[400px] resize-y"
-            placeholder="HTML-контент страницы. Сгенерируйте через AI или вставьте свой..."
+            className="w-full px-4 py-3 bg-bg-secondary border border-border-primary rounded-xl text-text-primary placeholder:text-text-muted outline-none transition-all duration-200 focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/10 font-mono text-sm min-h-[350px] resize-y"
+            placeholder="HTML-контент страницы. Нажмите 'Анализ + Генерация' или вставьте свой контент..."
             value={config.content[activePage] || ""}
             onChange={(e) => updateContent(activePage, e.target.value)}
           />
-          <p className="text-text-muted text-xs mt-2">
-            Поддерживается HTML. Можно редактировать после генерации.
-          </p>
         </div>
       </section>
 
       {/* Actions */}
-      <div className="flex justify-between">
-        <button onClick={onBack} className="btn-ghost flex items-center gap-2">
+      <div className="flex justify-between pt-2">
+        <button onClick={onBack} className="px-5 py-2.5 text-text-secondary font-medium rounded-xl hover:text-text-primary hover:bg-bg-tertiary transition-all flex items-center gap-2">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
           Назад
         </button>
-        <button onClick={onNext} className="btn-primary flex items-center gap-2">
+        <button onClick={onNext} className="px-6 py-3 bg-accent-primary text-white font-medium rounded-xl transition-all duration-200 hover:bg-accent-primary/90 hover:shadow-glow active:scale-[0.98] flex items-center gap-2">
           Далее — Экспорт
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

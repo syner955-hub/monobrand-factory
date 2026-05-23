@@ -26,47 +26,41 @@ export default function StepPages({ config, setConfig, onNext, onBack }: Props) 
   const togglePage = (pageId: string) => {
     const page = availablePages.find(p => p.id === pageId);
     if (page?.required) return;
-    
     const pages = config.pages.includes(pageId)
       ? config.pages.filter(p => p !== pageId)
       : [...config.pages, pageId];
     setConfig({ ...config, pages });
   };
 
-  const selectAll = () => {
-    setConfig({ ...config, pages: availablePages.map(p => p.id) });
-  };
-
-  const selectMinimal = () => {
-    setConfig({ ...config, pages: ["home", "bonus", "legit"] });
-  };
+  const selectAll = () => setConfig({ ...config, pages: availablePages.map(p => p.id) });
+  const selectMinimal = () => setConfig({ ...config, pages: ["home", "bonus", "legit"] });
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Quick select */}
-      <section className="glass-card p-6">
-        <h3 className="text-text-primary font-semibold mb-4">Быстрый выбор</h3>
-        <div className="flex gap-3">
-          <button onClick={selectMinimal} className="btn-secondary text-sm">
-            Минимум (3 страницы)
+      <section className="bg-bg-card border border-border-primary rounded-2xl p-5 shadow-sm">
+        <div className="flex items-center justify-between">
+          <h3 className="text-text-primary font-semibold">Быстрый выбор</h3>
+          <span className="text-sm font-semibold text-accent-primary bg-accent-primary/8 px-3 py-1 rounded-full">
+            {config.pages.length} страниц
+          </span>
+        </div>
+        <div className="flex gap-3 mt-3">
+          <button onClick={selectMinimal} className="px-4 py-2 bg-bg-tertiary border border-border-primary text-text-secondary text-sm font-medium rounded-lg hover:border-border-hover hover:bg-bg-hover transition-all">
+            Минимум (3)
           </button>
-          <button onClick={selectAll} className="btn-secondary text-sm">
-            Все страницы ({availablePages.length})
+          <button onClick={selectAll} className="px-4 py-2 bg-bg-tertiary border border-border-primary text-text-secondary text-sm font-medium rounded-lg hover:border-border-hover hover:bg-bg-hover transition-all">
+            Все ({availablePages.length})
           </button>
-          <button onClick={() => setConfig({ ...config, pages: ["home"] })} className="btn-ghost text-sm">
+          <button onClick={() => setConfig({ ...config, pages: ["home"] })} className="px-4 py-2 text-text-muted text-sm font-medium rounded-lg hover:text-text-secondary hover:bg-bg-tertiary transition-all">
             Только главная
           </button>
         </div>
       </section>
 
       {/* Pages grid */}
-      <section className="glass-card p-6">
-        <div className="flex items-center justify-between mb-4">
-          <h3 className="text-text-primary font-semibold">Страницы сайта</h3>
-          <span className="text-accent-primary text-sm font-medium">
-            {config.pages.length} выбрано
-          </span>
-        </div>
+      <section className="bg-bg-card border border-border-primary rounded-2xl p-6 shadow-sm">
+        <h3 className="text-text-primary font-semibold mb-4">Страницы сайта</h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
           {availablePages.map((page) => {
             const isSelected = config.pages.includes(page.id);
@@ -76,26 +70,24 @@ export default function StepPages({ config, setConfig, onNext, onBack }: Props) 
                 onClick={() => togglePage(page.id)}
                 className={`p-4 rounded-xl border text-left transition-all duration-200 flex items-start gap-3 ${
                   isSelected
-                    ? "border-accent-primary bg-accent-primary/5 shadow-glow"
-                    : "border-border-primary hover:border-border-hover bg-bg-tertiary"
-                } ${page.required ? "ring-1 ring-accent-success/30" : ""}`}
+                    ? "border-accent-primary bg-accent-primary/5 ring-1 ring-accent-primary/15"
+                    : "border-border-primary hover:border-border-hover bg-bg-secondary hover:bg-bg-hover"
+                } ${page.required ? "ring-1 ring-accent-success/20" : ""}`}
               >
                 <span className="text-xl mt-0.5">{page.icon}</span>
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2">
-                    <span className="font-medium text-text-primary text-sm">{page.label}</span>
+                    <span className={`font-medium text-sm ${isSelected ? "text-accent-primary" : "text-text-primary"}`}>{page.label}</span>
                     {page.required && (
-                      <span className="text-[10px] px-1.5 py-0.5 rounded bg-accent-success/20 text-accent-success font-medium">
+                      <span className="text-[10px] px-1.5 py-0.5 rounded-md bg-accent-success/10 text-accent-success font-semibold">
                         обязательная
                       </span>
                     )}
                   </div>
-                  <p className="text-text-muted text-xs mt-1">{page.desc}</p>
+                  <p className="text-text-muted text-xs mt-1 leading-relaxed">{page.desc}</p>
                 </div>
                 <div className={`w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-all ${
-                  isSelected
-                    ? "border-accent-primary bg-accent-primary"
-                    : "border-border-primary"
+                  isSelected ? "border-accent-primary bg-accent-primary" : "border-border-primary"
                 }`}>
                   {isSelected && (
                     <svg className="w-3 h-3 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -109,22 +101,22 @@ export default function StepPages({ config, setConfig, onNext, onBack }: Props) 
         </div>
       </section>
 
-      {/* Info */}
-      <div className="glass-card p-4 border-l-4 border-l-accent-info">
+      {/* Tip */}
+      <div className="bg-accent-info/5 border border-accent-info/20 rounded-xl p-4">
         <p className="text-text-secondary text-sm">
-          <span className="text-accent-info font-medium">Подсказка:</span> Агент анализа определит какие интенты не покрыты конкурентами и предложит дополнительные страницы. Сейчас выбери базовый набор.
+          <span className="text-accent-info font-semibold">Подсказка:</span> Агент анализа определит непокрытые интенты и предложит дополнительные страницы автоматически.
         </p>
       </div>
 
       {/* Actions */}
-      <div className="flex justify-between">
-        <button onClick={onBack} className="btn-ghost flex items-center gap-2">
+      <div className="flex justify-between pt-2">
+        <button onClick={onBack} className="px-5 py-2.5 text-text-secondary font-medium rounded-xl hover:text-text-primary hover:bg-bg-tertiary transition-all flex items-center gap-2">
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
           </svg>
           Назад
         </button>
-        <button onClick={onNext} className="btn-primary flex items-center gap-2">
+        <button onClick={onNext} className="px-6 py-3 bg-accent-primary text-white font-medium rounded-xl transition-all duration-200 hover:bg-accent-primary/90 hover:shadow-glow active:scale-[0.98] flex items-center gap-2">
           Далее — Контент
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />

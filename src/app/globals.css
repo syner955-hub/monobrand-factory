@@ -2,43 +2,48 @@
 @import "tailwindcss";
 
 @theme {
-  --color-bg-primary: #0a0a0f;
-  --color-bg-secondary: #12121a;
-  --color-bg-tertiary: #1a1a26;
-  --color-bg-card: #15151f;
-  --color-bg-hover: #1e1e2d;
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8f9fc;
+  --color-bg-tertiary: #f1f3f9;
+  --color-bg-card: #ffffff;
+  --color-bg-hover: #f4f6fb;
 
-  --color-accent-primary: #a855f7;
-  --color-accent-secondary: #6366f1;
-  --color-accent-success: #10b981;
-  --color-accent-warning: #f59e0b;
-  --color-accent-danger: #ef4444;
-  --color-accent-info: #06b6d4;
+  --color-accent-primary: #7c3aed;
+  --color-accent-secondary: #4f46e5;
+  --color-accent-success: #059669;
+  --color-accent-warning: #d97706;
+  --color-accent-danger: #dc2626;
+  --color-accent-info: #0891b2;
 
-  --color-text-primary: #f1f1f4;
-  --color-text-secondary: #9ca3af;
-  --color-text-muted: #6b7280;
+  --color-text-primary: #1a1a2e;
+  --color-text-secondary: #4b5563;
+  --color-text-muted: #9ca3af;
 
-  --color-border-primary: #2a2a3a;
-  --color-border-hover: #3a3a4f;
-  --color-border-active: #a855f7;
+  --color-border-primary: #e5e7eb;
+  --color-border-hover: #d1d5db;
+  --color-border-active: #7c3aed;
 
   --font-sans: 'Inter', system-ui, sans-serif;
   --font-mono: 'JetBrains Mono', monospace;
+
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.04);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.08);
+  --shadow-glow: 0 0 20px rgba(124, 58, 237, 0.12);
 }
 
 * {
   scrollbar-width: thin;
-  scrollbar-color: #2a2a3a #0a0a0f;
+  scrollbar-color: #d1d5db #f8f9fc;
 }
 
 *::-webkit-scrollbar { width: 6px; }
-*::-webkit-scrollbar-track { background: #0a0a0f; }
-*::-webkit-scrollbar-thumb { background: #2a2a3a; border-radius: 3px; }
-*::-webkit-scrollbar-thumb:hover { background: #3a3a4f; }
+*::-webkit-scrollbar-track { background: #f8f9fc; }
+*::-webkit-scrollbar-thumb { background: #d1d5db; border-radius: 3px; }
+*::-webkit-scrollbar-thumb:hover { background: #9ca3af; }
 
 body {
-  background: var(--color-bg-primary);
+  background: var(--color-bg-secondary);
   color: var(--color-text-primary);
   font-family: var(--font-sans);
 }

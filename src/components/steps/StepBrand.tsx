@@ -12,7 +12,7 @@ const geos = [
   { value: "au", label: "Австралия", flag: "🇦🇺", lang: "en" },
   { value: "ca", label: "Канада", flag: "🇨🇦", lang: "en" },
   { value: "ca-fr", label: "Канада (FR)", flag: "🇨🇦", lang: "fr" },
-  { value: "gb", label: "Великобритания", flag: "🇬🇧", lang: "en" },
+  { value: "gb", label: "UK", flag: "🇬🇧", lang: "en" },
   { value: "de", label: "Германия", flag: "🇩🇪", lang: "de" },
   { value: "se", label: "Швеция", flag: "🇸🇪", lang: "sv" },
   { value: "no", label: "Норвегия", flag: "🇳🇴", lang: "no" },
@@ -22,8 +22,8 @@ const geos = [
 ];
 
 const engines: { value: SearchEngine; label: string; desc: string; icon: string }[] = [
-  { value: "google", label: "Google", desc: "Глубокий контент, E-E-A-T, длинные тексты", icon: "🔵" },
-  { value: "bing", label: "Bing", desc: "Точные ключи, EMD, видео, IndexNow", icon: "🟢" },
+  { value: "google", label: "Google", desc: "Глубокий контент, E-E-A-T, длинные тексты", icon: "🔍" },
+  { value: "bing", label: "Bing", desc: "Точные ключи, EMD, видео, IndexNow", icon: "🅱️" },
   { value: "both", label: "Оба", desc: "Два сайта — максимальный охват", icon: "⚡" },
 ];
 
@@ -31,29 +31,29 @@ export default function StepBrand({ config, setConfig, onNext }: Props) {
   const canProceed = config.brand && config.geo && config.searchEngine;
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6">
       {/* Brand */}
-      <section className="glass-card p-6">
+      <section className="bg-bg-card border border-border-primary rounded-2xl p-6 shadow-sm">
         <h3 className="text-text-primary font-semibold mb-4 flex items-center gap-2">
-          <span className="w-6 h-6 rounded-lg bg-accent-primary/20 flex items-center justify-center text-xs">1</span>
+          <span className="w-7 h-7 rounded-lg bg-accent-primary/10 flex items-center justify-center text-xs text-accent-primary font-bold">1</span>
           Бренд
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <div>
-            <label className="text-text-secondary text-sm mb-2 block">Название бренда</label>
+            <label className="text-text-secondary text-sm font-medium mb-2 block">Название бренда</label>
             <input
               type="text"
-              className="input-field"
+              className="w-full px-4 py-3 bg-bg-secondary border border-border-primary rounded-xl text-text-primary placeholder:text-text-muted outline-none transition-all duration-200 focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/10"
               placeholder="VegaStars Casino"
               value={config.brand}
               onChange={(e) => setConfig({ ...config, brand: e.target.value })}
             />
           </div>
           <div>
-            <label className="text-text-secondary text-sm mb-2 block">Официальный сайт</label>
+            <label className="text-text-secondary text-sm font-medium mb-2 block">Официальный сайт</label>
             <input
               type="text"
-              className="input-field"
+              className="w-full px-4 py-3 bg-bg-secondary border border-border-primary rounded-xl text-text-primary placeholder:text-text-muted outline-none transition-all duration-200 focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/10"
               placeholder="https://vega-stars.com"
               value={config.officialUrl}
               onChange={(e) => setConfig({ ...config, officialUrl: e.target.value })}
@@ -61,22 +61,22 @@ export default function StepBrand({ config, setConfig, onNext }: Props) {
           </div>
         </div>
         <div className="mt-4">
-          <label className="text-text-secondary text-sm mb-2 block">Домен для нашего сайта</label>
+          <label className="text-text-secondary text-sm font-medium mb-2 block">Домен для сайта</label>
           <input
             type="text"
-            className="input-field"
+            className="w-full px-4 py-3 bg-bg-secondary border border-border-primary rounded-xl text-text-primary placeholder:text-text-muted outline-none transition-all duration-200 focus:border-accent-primary focus:ring-2 focus:ring-accent-primary/10"
             placeholder="vegastars-casino.com"
             value={config.domain}
             onChange={(e) => setConfig({ ...config, domain: e.target.value })}
           />
-          <p className="text-text-muted text-xs mt-1">EMD (exact match domain) — домен совпадает с брендом</p>
+          <p className="text-text-muted text-xs mt-1.5">Домен должен совпадать или быть максимально близок к бренду</p>
         </div>
       </section>
 
       {/* Geo */}
-      <section className="glass-card p-6">
+      <section className="bg-bg-card border border-border-primary rounded-2xl p-6 shadow-sm">
         <h3 className="text-text-primary font-semibold mb-4 flex items-center gap-2">
-          <span className="w-6 h-6 rounded-lg bg-accent-primary/20 flex items-center justify-center text-xs">2</span>
+          <span className="w-7 h-7 rounded-lg bg-accent-primary/10 flex items-center justify-center text-xs text-accent-primary font-bold">2</span>
           Гео и язык
         </h3>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-3">
@@ -84,23 +84,23 @@ export default function StepBrand({ config, setConfig, onNext }: Props) {
             <button
               key={g.value}
               onClick={() => setConfig({ ...config, geo: g.value, language: g.lang })}
-              className={`p-3 rounded-xl border text-center transition-all duration-200 ${
+              className={`p-3.5 rounded-xl border text-center transition-all duration-200 ${
                 config.geo === g.value
-                  ? "border-accent-primary bg-accent-primary/10 shadow-glow"
-                  : "border-border-primary hover:border-border-hover bg-bg-tertiary"
+                  ? "border-accent-primary bg-accent-primary/5 shadow-glow ring-1 ring-accent-primary/20"
+                  : "border-border-primary hover:border-border-hover hover:bg-bg-hover bg-bg-secondary"
               }`}
             >
-              <span className="text-2xl block mb-1">{g.flag}</span>
-              <span className="text-xs font-medium text-text-secondary">{g.label}</span>
+              <span className="text-2xl block mb-1.5">{g.flag}</span>
+              <span className={`text-xs font-medium ${config.geo === g.value ? "text-accent-primary" : "text-text-secondary"}`}>{g.label}</span>
             </button>
           ))}
         </div>
       </section>
 
       {/* Search Engine */}
-      <section className="glass-card p-6">
+      <section className="bg-bg-card border border-border-primary rounded-2xl p-6 shadow-sm">
         <h3 className="text-text-primary font-semibold mb-4 flex items-center gap-2">
-          <span className="w-6 h-6 rounded-lg bg-accent-primary/20 flex items-center justify-center text-xs">3</span>
+          <span className="w-7 h-7 rounded-lg bg-accent-primary/10 flex items-center justify-center text-xs text-accent-primary font-bold">3</span>
           Поисковик
         </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
@@ -110,26 +110,26 @@ export default function StepBrand({ config, setConfig, onNext }: Props) {
               onClick={() => setConfig({ ...config, searchEngine: e.value })}
               className={`p-5 rounded-xl border text-left transition-all duration-200 ${
                 config.searchEngine === e.value
-                  ? "border-accent-primary bg-accent-primary/10 shadow-glow"
-                  : "border-border-primary hover:border-border-hover bg-bg-tertiary"
+                  ? "border-accent-primary bg-accent-primary/5 shadow-glow ring-1 ring-accent-primary/20"
+                  : "border-border-primary hover:border-border-hover hover:bg-bg-hover bg-bg-secondary"
               }`}
             >
-              <div className="flex items-center gap-2 mb-2">
+              <div className="flex items-center gap-2.5 mb-2">
                 <span className="text-xl">{e.icon}</span>
-                <span className="font-semibold text-text-primary">{e.label}</span>
+                <span className={`font-semibold ${config.searchEngine === e.value ? "text-accent-primary" : "text-text-primary"}`}>{e.label}</span>
               </div>
-              <p className="text-text-muted text-xs">{e.desc}</p>
+              <p className="text-text-muted text-xs leading-relaxed">{e.desc}</p>
             </button>
           ))}
         </div>
       </section>
 
       {/* Actions */}
-      <div className="flex justify-end">
+      <div className="flex justify-end pt-2">
         <button
           onClick={onNext}
           disabled={!canProceed}
-          className={`btn-primary flex items-center gap-2 ${!canProceed ? "opacity-40 cursor-not-allowed" : ""}`}
+          className={`px-6 py-3 bg-accent-primary text-white font-medium rounded-xl transition-all duration-200 hover:bg-accent-primary/90 hover:shadow-glow active:scale-[0.98] flex items-center gap-2 ${!canProceed ? "opacity-40 cursor-not-allowed" : ""}`}
         >
           Далее — Выбор страниц
           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
