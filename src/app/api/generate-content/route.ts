@@ -4,6 +4,7 @@ import OpenAI from "openai";
 function getOpenAI() {
   return new OpenAI({
     apiKey: process.env.OPENAI_API_KEY || "sk-placeholder",
+    baseURL: process.env.OPENAI_BASE_URL || "https://api.openai.com/v1",
   });
 }
 
@@ -78,7 +79,7 @@ ${engineHints}
 
       const openai = getOpenAI();
       const completion = await openai.chat.completions.create({
-        model: "gpt-4o-mini",
+        model: process.env.AI_MODEL || "gpt-4o-mini",
         messages: [
           { role: "system", content: SYSTEM_PROMPT },
           { role: "user", content: userPrompt },
